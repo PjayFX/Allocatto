@@ -1,0 +1,33 @@
+---
+description: On command, update the Allocato logic map (source of truth) in .context/architecture/
+alwaysApply: true
+---
+
+# Logic Map
+
+A living, source-of-truth record of how Allocato works, kept for quick reference.
+
+## Trigger
+- Update ONLY when explicitly asked (e.g. "update the logic map").
+- Never update it automatically.
+
+## Where
+- Current map: `.context/architecture/logic-map.md` - always reflects the latest logic, updated in place.
+- History: `.context/architecture/history/YYYY-MM-DD-logic-map.md` - save a dated snapshot copy on each update so history is preserved. If multiple in one day, append `-2`, `-3`.
+
+## Update procedure
+1. Update `logic-map.md` to reflect current logic.
+2. Save a dated snapshot copy into `history/`.
+3. Add a short entry to the day's work log.
+
+## Contents to maintain
+- **Overview** - what Allocato is / does (salary in -> allocated across buckets).
+- **Buckets & rules** - bucket model and rule types (fixed amount vs percentage).
+- **Allocation flow** - step-by-step: salary -> apply rules -> compute remainder -> optional default-bucket routing.
+- **Data / types** - core shapes (`Bucket`, `AllocationRule`, `AllocationConfig`, `AllocationResult`).
+- **Business rules** - validation (percentages <= 100%, fixed amounts <= salary), leftover handling, rounding.
+- **Integration points** - any UI/CLI/external surfaces, once they exist.
+
+## Format
+- Use diagrams where helpful (e.g. Mermaid for flows), plus concise prose.
+- Keep it scannable - it's a reference for quick checking.

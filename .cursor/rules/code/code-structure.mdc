@@ -1,0 +1,56 @@
+---
+description: How code is structured - composed functions (backend) and idiomatic typed frontend, in cohesive technical folders
+alwaysApply: true
+---
+
+# Code Structure
+
+This is the project's coding style. Favor readability and learnability above cleverness.
+
+## Guiding patterns
+- **Composed Method** (Kent Beck): every function is composed of calls to other
+  well-named functions at the same level of abstraction. Read the top like a
+  summary; "drill down" via Go to Definition (ctrl+click).
+- **Functional Core, Imperative Shell** (Gary Bernhardt): pure logic in the
+  core, side effects (UI, storage, network) only at the edges.
+- No single `main` is required - composition is what matters, not a fixed entry
+  point. Any function can be an entry; favor functions over functions.
+
+## Backend - functional
+- Function per function: small, single-purpose, descriptively named pure
+  functions composed together (the functional core).
+- Functions for behavior; typed objects for data shapes.
+- Don't over-fragment: decompose where it aids understanding, not blindly.
+
+## Frontend - technical & idiomatic
+- Follow the chosen framework's idiomatic structure strictly (components /
+  composables / state), strongly typed throughout. (Detailed once the stack is
+  locked - DEFERRED.)
+- The frontend is a thin shell that calls the backend's pure functions; keep
+  business logic out of the UI.
+
+## Organize folders by technical responsibility
+- Group code into NARROW, purpose-named folders by what they do (e.g. `money/`,
+  `validation/`, `calculation/`, `dates/`, `types/`).
+- Never a broad catch-all `utils/`. Files in a folder must genuinely relate to
+  that folder's single responsibility.
+
+## Self-documenting folders + source of truth
+- Each folder has an index/barrel file that re-exports its functions, with a
+  one-line header comment describing the folder's job.
+- Keep barrels shallow: one per folder; barrels do NOT import other barrels
+  (avoids circular imports). Direct imports are fine when needed.
+- One MAIN function per file, file named after that function (`formatPeso.ts` ->
+  `formatPeso`). Small private helpers may share the file.
+- Deep/technical explanations of folders, files, and trade-offs live in the
+  **logic map** (`.context/architecture/logic-map.md`) - the single source of
+  truth. Do not scatter per-folder README files.
+
+## Favor reusable generics - but not prematurely
+- Extract generic, dependency-free helpers so they can be reused (DRY).
+- Apply the rule of three: abstract into a generic only after real repetition
+  (~3 uses), not preemptively (avoid premature abstraction).
+
+## Naming
+- Names carry the readability. Keep function/file names precise and intention-
+  revealing so the ctrl+click "drill down" workflow stays reliable.

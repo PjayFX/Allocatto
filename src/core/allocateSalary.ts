@@ -2,6 +2,7 @@ import type { AllocateOptions, AllocationConfig, AllocationResult } from './type
 import { toCentavos } from './money';
 import { allocateBuckets, perDay } from './calculation';
 import { validateConfig } from './validation';
+import { payPeriodFrom } from './periods';
 
 const DEFAULT_DAYS_IN_PERIOD = 15;
 
@@ -16,7 +17,8 @@ export function allocateSalary(
   options: AllocateOptions = {},
 ): AllocationResult {
   const salaryCentavos = toCentavos(salary);
-  const daysInPeriod = options.daysInPeriod ?? DEFAULT_DAYS_IN_PERIOD;
+  const period = options.paidOn ? payPeriodFrom(options.paidOn) : undefined;
+  const daysInPeriod = options.daysInPeriod ?? period?.days ?? DEFAULT_DAYS_IN_PERIOD;
 
   const issues = validateConfig(config, salaryCentavos);
   const allocations = allocateBuckets(config.buckets, salaryCentavos);
@@ -31,6 +33,7 @@ export function allocateSalary(
     allowance,
     perDay: perDay(allowance, daysInPeriod),
     daysInPeriod,
+    period,
     valid: issues.every((issue) => issue.severity !== 'error'),
     issues,
   };

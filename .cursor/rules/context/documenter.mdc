@@ -1,0 +1,30 @@
+---
+description: Log accomplishments to the daily work log in .context/documentation/
+alwaysApply: true
+---
+
+# Documenter
+
+When we finish a meaningful piece of work (a feature, fix, setup, or decision), record it.
+
+## Where
+- Folder: `.context/documentation/` (gitignored).
+- One file per day: `.context/documentation/YYYY-MM-DD.md`.
+- Append to today's file if it exists; create it if it doesn't. Never overwrite earlier entries.
+
+## Entry format
+Each accomplishment is appended as a timestamped section:
+
+```markdown
+## HH:MM - <short title>
+
+**What:** what we did
+**Why:** the reason / goal
+**Files:** key files added or changed
+**Decisions:** notable choices or trade-offs
+**Next:** any immediate follow-ups (optional)
+```
+
+## When
+- After completing an agreed task, not for trivial back-and-forth.
+- Keep entries concise but specific enough to be useful later.

@@ -3,7 +3,9 @@ node_modules/
 
 # Build output & test coverage
 dist/
+dev-dist/
 coverage/
+*.tsbuildinfo
 
 # Logs & OS cruft
 *.log
@@ -17,4 +19,7 @@ coverage/
 
 # Local demo / manual run scripts — kept local, not committed
 demo/
-.cursor
+
+# Cursor: keep project rules in the repo, ignore other Cursor internals
+.cursor/*
+!.cursor/rules/

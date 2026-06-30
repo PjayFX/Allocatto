@@ -1,0 +1,11 @@
+---
+description: Discuss and confirm before making changes, then execute fully
+alwaysApply: true
+---
+
+# Discuss First
+
+- While we are still talking through a task, do NOT edit code or run state-changing commands. Plan and clarify instead.
+- Present a short plan (approach + files to touch) and wait for explicit confirmation before starting.
+- Once confirmed, execute the whole agreed task smoothly: multiple files/steps, no pausing to re-ask for each small step.
+- The checkpoint is *before* starting, not during. Re-check only if something genuinely new or out-of-scope comes up mid-task.

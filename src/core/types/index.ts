@@ -3,6 +3,16 @@
 /** ISO 4217 currency code, e.g. "PHP", "USD". */
 export type CurrencyCode = string;
 
+/** A calendar date as a "YYYY-MM-DD" string. */
+export type ISODate = string;
+
+/** A pay period bounded by two paydays. `days` is the span used for per-day math. */
+export interface PayPeriod {
+  start: ISODate;
+  end: ISODate;
+  days: number;
+}
+
 /** How a bucket takes its share: a fixed amount, or a percentage of salary. */
 export type AllocationRule =
   | { kind: 'amount'; amount: number } // major units, e.g. 5000 means ₱5,000.00
@@ -13,6 +23,9 @@ export interface Bucket {
   id: string;
   name: string;
   rule: AllocationRule;
+  /** Optional base static QR Ph payload (the bank/e-wallet's own QR string) used
+   *  to generate a dynamic, amount-filled QR for this bucket's share. */
+  qrPh?: string;
 }
 
 export interface AllocationConfig {
@@ -23,6 +36,8 @@ export interface AllocationConfig {
 export interface AllocateOptions {
   /** Days in the pay period used for the per-day rate. Defaults to 15. */
   daysInPeriod?: number;
+  /** Pay date ("YYYY-MM-DD"); when given, daysInPeriod is derived from the pay schedule. */
+  paidOn?: ISODate;
 }
 
 export type IssueSeverity = 'error' | 'warning';
@@ -52,6 +67,10 @@ export interface AllocationResult {
   /** Allowance spread per day of the period, in centavos. */
   perDay: number;
   daysInPeriod: number;
+  /** The pay period this allocation covers, when derived from a pay date. */
+  period?: PayPeriod;
+  /** Centavos carried in from a previous period (negative = overspend deficit). Set by applyCarryover. */
+  carriedOver?: number;
   /** False when any error-severity issue is present. */
   valid: boolean;
   issues: ValidationIssue[];
