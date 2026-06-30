@@ -14,4 +14,7 @@ coverage/
 
 # Scratch / out-of-context throwaway files — never committed
 .scratch/
+
+# Local demo / manual run scripts — kept local, not committed
+demo/
 .cursor

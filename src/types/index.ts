@@ -56,3 +56,66 @@ export interface AllocationResult {
   valid: boolean;
   issues: ValidationIssue[];
 }
+
+// --- Tracker (Phase 2) ---
+
+export type ExpenseSource = 'manual' | 'receipt';
+
+/** A single logged expense. `amount` is in major units (e.g. 75 = ₱75.00). */
+export interface Expense {
+  id: string;
+  amount: number;
+  /** ISO date, "YYYY-MM-DD". */
+  date: string;
+  /** Reporting label; categories are user-configurable. Missing = uncategorized. */
+  category?: string;
+  note?: string;
+  source: ExpenseSource;
+}
+
+/** Spend total for one category, in centavos. */
+export interface CategoryTotal {
+  category: string;
+  amount: number;
+}
+
+export interface SummarizeOptions {
+  /** "Today" as an ISO date for spent-today / remaining-today. Defaults to the local date. */
+  asOf?: string;
+}
+
+/** What was actually spent against an allocation's allowance. All money in centavos. */
+export interface SpendingSummary {
+  currency: CurrencyCode;
+  asOf: string;
+  allowance: number;
+  perDay: number;
+  totalSpent: number;
+  /** allowance − totalSpent; negative when overspent. */
+  remaining: number;
+  /** Whole-number percent of the allowance used. */
+  percentUsed: number;
+  spentToday: number;
+  /** perDay − spentToday; negative when today's spend exceeds the daily rate. */
+  remainingToday: number;
+  byCategory: CategoryTotal[];
+  overspent: boolean;
+}
+
+export type SavingsKind = 'deposit' | 'withdrawal';
+
+/** A movement into or out of savings. `amount` is in major units. */
+export interface SavingsTransaction {
+  id: string;
+  amount: number;
+  date: string;
+  kind: SavingsKind;
+  note?: string;
+}
+
+/** Running savings position. All money in centavos. */
+export interface SavingsSummary {
+  balance: number;
+  totalDeposits: number;
+  totalWithdrawals: number;
+}
