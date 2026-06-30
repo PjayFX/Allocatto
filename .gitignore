@@ -1,3 +1,14 @@
+# Node dependencies — regenerable via `npm install`, never committed
+node_modules/
+
+# Build output & test coverage
+dist/
+coverage/
+
+# Logs & OS cruft
+*.log
+.DS_Store
+
 # Local AI work context (work logs, handovers) — not committed
 .context/
 
