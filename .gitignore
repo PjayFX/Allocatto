@@ -1,0 +1,6 @@
+# Local AI work context (work logs, handovers) — not committed
+.context/
+
+# Scratch / out-of-context throwaway files — never committed
+.scratch/
+.cursor
