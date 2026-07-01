@@ -698,9 +698,13 @@ textarea:focus-visible {
   }
 
   /* ---- Dashboard: Cover Flow chart switcher ---- */
+  /* Soft-fade the left/right edges so peeking side cards melt away instead of
+     being sharply sliced by the container's overflow clip. */
   .coverflow {
     overflow: hidden;
     padding: 0.25rem 0 0;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
   }
   .coverflow__stage {
     position: relative;
@@ -750,18 +754,6 @@ textarea:focus-visible {
   /* ---- Planner: pay carousel (subtle peek of past pays) ---- */
   .coverflow--pays .coverflow__stage {
     height: 340px;
-  }
-  /* Soft-fade the left/right edges so the peeking side cards melt away instead
-     of being sharply sliced by the container. */
-  .coverflow--pays {
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0,
-      #000 7%,
-      #000 93%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
   }
   /* Uniform card size so the short current card and the taller breakdown cards
      match — no lopsided heights, no clipped edges. */
