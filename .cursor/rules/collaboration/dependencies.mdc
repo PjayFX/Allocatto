@@ -1,9 +1,0 @@
----
-description: Never add or change dependencies without approval
-alwaysApply: true
----
-
-# Dependencies
-
-- Never add, remove, or swap npm packages on your own.
-- If something needs a package, propose it (what it is and why) and wait for approval before installing.

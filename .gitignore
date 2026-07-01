@@ -20,6 +20,5 @@ coverage/
 # Local demo / manual run scripts — kept local, not committed
 demo/
 
-# Cursor: keep project rules in the repo, ignore other Cursor internals
-.cursor/*
-!.cursor/rules/
+# Cursor: local-only — kept on disk (rules still apply) but never committed
+.cursor/
