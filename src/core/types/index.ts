@@ -92,6 +92,17 @@ export interface Expense {
   source: ExpenseSource;
 }
 
+/** A reusable expense template. Tapping it logs an Expense at this snapshot
+ *  amount; editing a saved item only affects future logs, never past expenses. */
+export interface SavedItem {
+  id: string;
+  /** Display name, e.g. "pares96". */
+  label: string;
+  /** Major units (e.g. 135 = ₱135.00). */
+  amount: number;
+  category: string;
+}
+
 /** Spend total for one category, in centavos. */
 export interface CategoryTotal {
   category: string;
@@ -137,4 +148,86 @@ export interface SavingsSummary {
   balance: number;
   totalDeposits: number;
   totalWithdrawals: number;
+}
+
+// --- Dashboard (Phase 2) ---
+
+/** A recorded pay event. `amount` is in major units; kept as history so the
+ *  dashboard can show last pay / averages. `config` is the bucket setup captured
+ *  at the moment the pay was archived, so later edits to the plan never rewrite
+ *  a past pay's allocation. Absent on pays recorded before snapshots existed. */
+export interface Paycheck {
+  id: string;
+  amount: number;
+  date: ISODate;
+  config?: AllocationConfig;
+}
+
+/** Salary trends across recorded paychecks. All money in centavos. */
+export interface SalaryInsights {
+  /** Most recent pay. */
+  latest: number;
+  /** The pay before the latest, when there is one. */
+  previous?: number;
+  average: number;
+  count: number;
+}
+
+/** Spend total for a single calendar day, in centavos. */
+export interface DailyTotal {
+  date: ISODate;
+  amount: number;
+}
+
+/** Cumulative savings balance at a point in time, in centavos. */
+export interface SavingsPoint {
+  date: ISODate;
+  balance: number;
+}
+
+/** The kind of record in the unified transaction feed. */
+export type LedgerKind = 'pay' | 'expense' | 'deposit' | 'withdrawal';
+
+/** One entry in the combined records feed (pays + expenses + savings moves).
+ *  `direction` is cash-in-hand: income and withdrawals come in, spending and
+ *  deposits go out. `amount` is always positive centavos. */
+export interface LedgerEntry {
+  id: string;
+  kind: LedgerKind;
+  date: ISODate;
+  amount: number;
+  direction: 'in' | 'out';
+  label: string;
+  sublabel?: string;
+}
+
+// --- Backup / restore ---
+
+/** The plan data worth preserving in a backup (mirrors the plan store). */
+export interface PlanSnapshot {
+  salary: number;
+  paidOn: ISODate;
+  config: AllocationConfig;
+  allowanceQrPh?: string;
+  payHistory: Paycheck[];
+}
+
+/** The tracker data worth preserving in a backup (mirrors the tracker store). */
+export interface TrackerSnapshot {
+  expenses: Expense[];
+  savedItems: SavedItem[];
+  categories: string[];
+  /** Category name → icon key. Optional so older backups still load. */
+  categoryIcons?: Record<string, string>;
+  savings: SavingsTransaction[];
+}
+
+/** A portable, self-describing snapshot of everything the user owns. Written to
+ *  a JSON file for backup and read back to restore onto a device. */
+export interface Backup {
+  app: 'allocatto';
+  version: number;
+  exportedAt: ISODate;
+  plan: PlanSnapshot;
+  tracker: TrackerSnapshot;
 }

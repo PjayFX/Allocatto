@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { allocateSalary } from '../../core';
 import { usePlanStore } from '../../store/planStore';
-import { SalaryInputs } from './SalaryInputs';
+import { PayCarousel } from './PayCarousel';
 import { AllocationSummary } from './AllocationSummary';
 import { PaymentQrs } from './PaymentQrs';
 
@@ -17,7 +17,7 @@ export default function PlannerPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <SalaryInputs />
+      <PayCarousel />
       {salary > 0 ? <AllocationSummary result={result} /> : null}
       {salary > 0 ? <PaymentQrs result={result} /> : null}
     </div>

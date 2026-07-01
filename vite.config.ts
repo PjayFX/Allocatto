@@ -19,6 +19,8 @@ export default defineConfig({
         display: 'standalone',
         start_url: '/',
         icons: [{ src: 'Allocatto.png', sizes: '1024x1024', type: 'image/png', purpose: 'any maskable' }],
+        // Installed app opens its own backup files, launching straight into import.
+        file_handlers: [{ action: '/', accept: { 'application/json': ['.allocatto'] } }],
       },
       devOptions: { enabled: true },
     }),
