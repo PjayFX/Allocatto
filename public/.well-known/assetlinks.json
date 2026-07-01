@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dev.pages.allocatto.twa",
+      "sha256_cert_fingerprints": [
+        "D2:A5:B2:7A:42:AA:9E:EE:48:8C:F4:3B:66:86:84:FE:18:EA:C6:C3:7C:55:75:2B:04:85:DC:2E:74:B1:79:65"
+      ]
+    }
+  }
+]
